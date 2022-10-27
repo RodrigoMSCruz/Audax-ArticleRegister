@@ -7,9 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.NoArgsConstructor;
 
@@ -21,28 +25,36 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Articles{
     
-     /*
-    @Id @GeneratedValue
-    private long id;
-    */
-    
-    private int id;
     @Id
+    @GeneratedValue
+    private long id;
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Type(type = "org.hibernate.type.UUIDCharType")
     @Column(nullable = false, unique = true)
     private UUID uuid;
+
     @Column(nullable = false, unique = true)
     private String title;
+
     @Column(nullable = false)
     private String resume;
+
     @Column(nullable = false)
     private String text;
+
+    @Column(nullable = false)
     private String slug;
+
     @Column(nullable = false)
     private LocalDateTime registeredAt;
 
-    public int getId() {
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    Users users;
+
+    public long getId() {
         return id;
     }
     
@@ -93,6 +105,14 @@ public class Articles{
     
     public void setRegisteredAt(LocalDateTime registeredAt) {
         this.registeredAt = registeredAt;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     public Articles(String title, String resume, String text) {

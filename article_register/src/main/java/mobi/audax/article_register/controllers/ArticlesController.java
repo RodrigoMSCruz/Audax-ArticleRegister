@@ -6,7 +6,6 @@ import mobi.audax.article_register.models.Articles;
 import mobi.audax.article_register.services.ArticlesService;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,13 +40,13 @@ public class ArticlesController {
     }
 
     @PostMapping("{id}")
-    public ResponseEntity<String> save(@PathVariable(value = "id") UUID articlesId, @RequestBody ArticlesDto articlesNovo){
+    public ResponseEntity<String> save(@PathVariable(value = "id") Long articlesId, @RequestBody ArticlesDto articlesNovo){
         articlesService.save(articlesNovo, articlesId);
         return ResponseEntity.status(HttpStatus.CREATED).body("Artigo cadastrado com sucesso.");
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<String> update(@PathVariable(value = "id") UUID articlesId, @RequestBody ArticlesDto articlesAtualizar){
+    public ResponseEntity<String> update(@PathVariable(value = "id") Long articlesId, @RequestBody ArticlesDto articlesAtualizar){
         try{
             articlesService.update(articlesId, articlesAtualizar);    
         }
@@ -58,7 +57,7 @@ public class ArticlesController {
     }
 
     @DeleteMapping(value = "{/id}")
-    public ResponseEntity<String> delete(@PathVariable(value = "id") UUID articlesId){
+    public ResponseEntity<String> delete(@PathVariable(value = "id") Long articlesId){
         try{
             articlesService.delete(articlesId);
         }

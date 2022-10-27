@@ -2,14 +2,20 @@ package mobi.audax.article_register.models;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.NoArgsConstructor;
 
@@ -22,16 +28,12 @@ import java.security.NoSuchAlgorithmException;
 @NoArgsConstructor
 public class Users{
 
-    /*
-    @Id @GeneratedValue
-    private long id;
-    */
-
-
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long id;
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, unique = true)
     private UUID uuid;
 
     @Column(nullable = false, unique = true)
@@ -42,6 +44,18 @@ public class Users{
 
     @Column(nullable = false)
     private LocalDateTime registeredAt;
+
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private Set<Articles> articles = new HashSet<>();
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public UUID getUuid() {
         return uuid;
@@ -97,6 +111,14 @@ public class Users{
         }
         BigInteger hash = new BigInteger(1, md.digest(value.getBytes()));
         return hash.toString(16);
+    }
+
+    public Set<Articles> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(Set<Articles> articles) {
+        this.articles = articles;
     }
 
 }
