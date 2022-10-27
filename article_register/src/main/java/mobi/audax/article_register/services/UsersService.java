@@ -41,7 +41,7 @@ public class UsersService {
     }
 
     @Transactional
-    public void update(Long id, Users novoUsersDto){
+    public void update(Long id, UsersDto novoUsersDto){
         Optional<Users> users = usersRepository.findById(id);
         if(users.isEmpty()){
             throw new UsersNotFoundException();

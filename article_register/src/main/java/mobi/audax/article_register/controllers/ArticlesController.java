@@ -39,7 +39,7 @@ public class ArticlesController {
         return articlesService.findAll();
     }
 
-    @PostMapping("{id}")
+    @PostMapping
     public ResponseEntity<String> save(@PathVariable(value = "id") Long articlesId, @RequestBody ArticlesDto articlesNovo){
         articlesService.save(articlesNovo, articlesId);
         return ResponseEntity.status(HttpStatus.CREATED).body("Artigo cadastrado com sucesso.");
