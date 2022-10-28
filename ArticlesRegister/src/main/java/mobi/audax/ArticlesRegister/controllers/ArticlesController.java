@@ -30,13 +30,13 @@ public class ArticlesController {
         return articlesService.findAll();
     }
 
-    @PostMapping
-    public ResponseEntity<String> save(@PathVariable(value = "id") Long articlesId, @RequestBody ArticlesDto articlesNovo){
-        articlesService.save(articlesNovo, articlesId);
+    @PostMapping("/{id}")
+    public ResponseEntity<String> save(@PathVariable(value = "id") Long id, @RequestBody ArticlesDto articlesNovo){
+        articlesService.save(id, articlesNovo);
         return ResponseEntity.status(HttpStatus.CREATED).body("Artigo cadastrado com sucesso.");
     }
 
-    @PutMapping(value="/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable(value = "id") Long articlesId, @RequestBody ArticlesDto articlesAtualizar){
         try{
             articlesService.update(articlesId, articlesAtualizar);    
@@ -47,7 +47,7 @@ public class ArticlesController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Artigo atualizado com sucesso.");    
     }
 
-    @DeleteMapping(value = "{/id}")
+    @DeleteMapping("{/id}")
     public ResponseEntity<String> delete(@PathVariable(value = "id") Long articlesId){
         try{
             articlesService.delete(articlesId);

@@ -38,7 +38,7 @@ public class ArticlesService {
     }
     
     @Transactional
-    public void save(ArticlesDto novoArticlesDto, Long userId){
+    public void save(Long userId, ArticlesDto novoArticlesDto){
         Users users = usersService.findById(userId);
         Articles articles = novoArticlesDto.convertToArticles();
         articles.setUsers(users);
