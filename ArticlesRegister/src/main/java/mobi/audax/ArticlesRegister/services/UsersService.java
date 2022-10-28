@@ -15,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UsersService {
     final UsersRepository usersRepository;
-    final ArticlesService articlesService;
 
-    public UsersService(UsersRepository usersRepository, ArticlesService articlesService){
+    public UsersService(UsersRepository usersRepository){
         this.usersRepository = usersRepository;
-        this.articlesService = articlesService;
     }
 
     public List<Users> findAll(){
