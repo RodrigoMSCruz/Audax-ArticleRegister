@@ -42,8 +42,8 @@ public class Users{
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private LocalDateTime registeredAt;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant registeredAt;
 
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
